@@ -7,3 +7,8 @@ FLask/React App allowing users to upload a picture of themselves, and then see a
 
 
 https://python.plainenglish.io/how-to-deploy-a-face-recognition-web-app-with-flask-react-from-zero-c4c624654646
+
+1. Frontend: REACT
+2. Backend: Flask
+3. Use facial feature detection
+
