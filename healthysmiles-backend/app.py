@@ -29,10 +29,10 @@ def api():
 			image = b[b.find(b',') + 1:]
 			im = Image.open(io.BytesIO(base64.b64decode(image)))
 			im = im.convert("RGB")
-			im.save('./images/image.jpeg')
+			im.save('./images/image.jpg')
 		except:
 			pass
-		return send_file('./images/image.jpeg', mimetype='image/jpeg')
+		return send_file("./images/image.jpg", mimetype="image/jpg")
 	
 
 

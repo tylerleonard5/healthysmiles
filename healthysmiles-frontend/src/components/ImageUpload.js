@@ -66,7 +66,7 @@ class ImageUpload extends Component {
         <input type="file" onChange={this.fileSelectedHandler}/>
         <button onClick={this.fileUploadHandler}>Upload</button>
         {this.state.ImgReturned &&
-        <img src= "images"/>}
+        <img src= "http://localhost:5000/api" alt="penis"/>}
 
       </div>
     );
