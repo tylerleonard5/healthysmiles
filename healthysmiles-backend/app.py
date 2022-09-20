@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
+from flask_cors import CORS
 from flask_cors import CORS
 import json
 from PIL import Image
@@ -7,6 +8,8 @@ import io
 import os
 import shutil
 import time
+import re
+import sys
 
 
 app = Flask(__name__)
@@ -17,18 +20,19 @@ CORS(app)
 def api():
 	data = request.get_json()
 	resp = 'Nobody'
-	directory = './images'
 
 	if data:
 		try:
+			time.sleep(1)
 			result = data['data']
-			b = bytes(result, 'utf-8')
-			image = b[b.find(b'/9'):]
+			b = bytes(result.get("base64"), 'utf-8')
+			image = b[b.find(b',') + 1:]
 			im = Image.open(io.BytesIO(base64.b64decode(image)))
-			im.save(directory+'/image.jpeg')
+			im = im.convert("RGB")
+			im.save('./images/image.jpeg')
 		except:
 			pass
-	return resp
+		return send_file('./images/image.jpeg', mimetype='image/jpeg')
 	
 
 
