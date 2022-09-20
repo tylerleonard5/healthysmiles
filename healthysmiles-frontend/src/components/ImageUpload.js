@@ -48,7 +48,7 @@ class ImageUpload extends Component {
     console.log(this.state.file)
     axios.post('http://127.0.0.1:5000/api', {data: this.state.file})
       .then(res => {
-        console.log(`response = ${res.data}`)
+        console.log(`response = ${typeof res.data}`)
         const name = (res.data.name)
         this.setState({
           ImgReturned:true,
@@ -59,6 +59,13 @@ class ImageUpload extends Component {
         console.log(`error = ${error}`)
       })
   }
+  newImage = () => {
+    this.setState({
+      ImgReturned:false,
+      file: null,
+      base64URL: "",
+    })
+  }
 
   render() {
     return (
@@ -67,6 +74,7 @@ class ImageUpload extends Component {
         <button onClick={this.fileUploadHandler}>Upload</button>
         {this.state.ImgReturned &&
         <img src= "http://localhost:5000/api" alt="penis"/>}
+        <button onClick={this.newImage}>Clear Image</button>
 
       </div>
     );

@@ -32,7 +32,7 @@ def api():
 			im.save('./images/image.jpg')
 		except:
 			pass
-		return send_file("./images/image.jpg", mimetype="image/jpg")
+	return send_file("./images/image.jpg", mimetype="image/jpg")
 	
 
 
