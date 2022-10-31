@@ -27,15 +27,15 @@ def visualize_mouth_landmarks(image, shape, colors=None, alpha=0.75):
 	# if the colors list is None, initialize it with a unique
 	# color for each facial landmark region
 	if colors is None:
-		colors = [(19, 199, 109), (79, 76, 240), (230, 159, 23),
-			(168, 100, 168), (158, 163, 32),
-			(163, 38, 32), (180, 42, 220), (0, 0, 255)]
+		colors = [(0,0,0), (0,0,0), (0,0,0),
+			(0,0,0), (0,0,0),
+			(0,0,0), (0,0,0), (0,0,0)]
 
 	# loop over the facial landmark regions individually
 	for (i, name) in enumerate(face_utils.FACIAL_LANDMARKS_IDXS.keys()):
 		# grab the (x, y)-coordinates associated with the
 		# face landmark
-		if name == "mouth" or name == "inner_mouth":
+		if name == "inner_mouth":
 			(j, k) = face_utils.FACIAL_LANDMARKS_IDXS[name]
 			pts = shape[j:k]
 
@@ -91,13 +91,13 @@ def api():
 				shape = face_utils.shape_to_np(shape)
 				# visualize all facial landmarks with a transparent overlay
 				output = visualize_mouth_landmarks(image_manip, shape)
-				cv2.imwrite("./images/penis.png", output)
+				cv2.imwrite("./images/mask_image.png", output)
 				cv2.waitKey(0)
 
 
 		except:
 			pass
-	return send_file("./images/penis.png", mimetype="image/png")
+	return send_file("./images/mask_image.png", mimetype="image/png")
 	
 
 
