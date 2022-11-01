@@ -18,43 +18,25 @@ import dlib
 import cv2
 
 
-def visualize_mouth_landmarks(image, shape, colors=None, alpha=0.75):
-	# create two copies of the input image -- one for the
-	# overlay and one for the final output image
+def visualize_mouth_landmarks(image, shape, color=(0,0,0), alpha=1):
+	# Create two copies of the image.  One will apply the overlay to a copy of an output image
 	overlay = image.copy()
 	output = image.copy()
 
-	# if the colors list is None, initialize it with a unique
-	# color for each facial landmark region
-	if colors is None:
-		colors = [(0,0,0), (0,0,0), (0,0,0),
-			(0,0,0), (0,0,0),
-			(0,0,0), (0,0,0), (0,0,0)]
+	# Only need the inner mouth indeces.  This gets the indeces of the intermouth in the shape np array
+	(j, k) = face_utils.FACIAL_LANDMARKS_IDXS["inner_mouth"]
 
-	# loop over the facial landmark regions individually
-	for (i, name) in enumerate(face_utils.FACIAL_LANDMARKS_IDXS.keys()):
-		# grab the (x, y)-coordinates associated with the
-		# face landmark
-		if name == "inner_mouth":
-			(j, k) = face_utils.FACIAL_LANDMARKS_IDXS[name]
-			pts = shape[j:k]
+	# this will get the points that can create a convex hull on the overlay image
+	pts = shape[j:k]
 
-			# check if are supposed to draw the jawline
-			if name == "jaw":
-				# since the jawline is a non-enclosed facial region,
-				# just draw lines between the (x, y)-coordinates
-				for l in range(1, len(pts)):
-					ptA = tuple(pts[l - 1])
-					ptB = tuple(pts[l])
-					cv2.line(overlay, ptA, ptB, colors[i], 2)
 
-			# otherwise, compute the convex hull of the facial
-			# landmark coordinates points and display it
-			else:
-				hull = cv2.convexHull(pts)
-				cv2.drawContours(overlay, [hull], -1, colors[i], -1)
+	# create a hull with these points
+	hull = cv2.convexHull(pts)
 
-	# apply the transparent overlay
+	# draw the hull on the overlay image with the default color
+	cv2.drawContours(overlay, [hull], -1, color, -1)
+
+	# apply the overlay to the output image
 	cv2.addWeighted(overlay, alpha, output, 1 - alpha, 0, output)
 
 	# return the output image
@@ -66,9 +48,11 @@ CORS(app)
 
 @app.route('/api', methods=['POST', 'GET'])
 def api():
+	# grab json from react
 	data = request.get_json()
 	resp = 'Nobody'
 
+	# check if data exists
 	if data:
 		try:
 			result = data['data']
