@@ -6,7 +6,8 @@ class ImageUpload extends Component {
   state = {
     file: null,
     base64URL: "",
-    ImgReturned:false
+    ImgReturned:false,
+    img: ""
   }
 
   fileSelectedHandler = (event) => {
@@ -45,6 +46,9 @@ class ImageUpload extends Component {
   }
 
   fileUploadHandler = () => {
+    this.setState({
+      img:null
+    })
     console.log(this.state.file)
     axios.post('http://127.0.0.1:5000/api', {data: this.state.file})
       .then(res => {
@@ -52,7 +56,7 @@ class ImageUpload extends Component {
         const name = (res.data.name)
         this.setState({
           ImgReturned:true,
-          img:res.data
+          img:"http://127.0.0.1:5000/api"
         })
       })
       .catch(error => {
@@ -64,6 +68,7 @@ class ImageUpload extends Component {
       ImgReturned:false,
       file: null,
       base64URL: "",
+      img:null
     })
   }
 
@@ -72,8 +77,8 @@ class ImageUpload extends Component {
       <div className="App">
         <input type="file" onChange={this.fileSelectedHandler}/>
         <button onClick={this.fileUploadHandler}>Upload</button>
-        {this.state.ImgReturned &&
-        <img src= "http://localhost:5000/api" alt="mask_image"/>}
+        {this.state.img &&
+        <img src= {this.state.img} alt="mask_image"/>}
         <button onClick={this.newImage}>Clear Image</button>
 
       </div>
