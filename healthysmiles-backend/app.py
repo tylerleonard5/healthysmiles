@@ -1,20 +1,12 @@
 from flask import Flask, request, send_file
 from flask_cors import CORS
 from flask_cors import CORS
-import json
 from PIL import Image
 import base64
-import io
-import os
-import shutil
-import time
-import re
-import sys
 from imutils import face_utils
-import numpy as np
-import argparse
 import imutils
 import dlib
+import io
 import cv2
 
 
@@ -66,7 +58,7 @@ def api():
 			predictor = dlib.shape_predictor("./predictor/shape_predictor_68_face_landmarks.dat")
 
 			image_manip = cv2.imread("./images/image.jpg")
-			image_manip = imutils.resize(image_manip, width=500)
+			image_manip = imutils.resize(image_manip, width=500, height=500)
 			gray = cv2.cvtColor(image_manip, cv2.COLOR_BGR2GRAY)
 			rects = detector(gray, 1)
 
