@@ -11,6 +11,7 @@ import sys
 import numpy as np
 import cv2
 
+success = False
 
 def visualize_mouth_landmarks(image, img2, shape, shape2, rows, cols, ch, color=(0,0,0), alpha=0.5):
 	# Create two copies of the image.  One will apply the overlay to a copy of an output image
@@ -70,9 +71,9 @@ def visualize_mouth_landmarks(image, img2, shape, shape2, rows, cols, ch, color=
 app = Flask(__name__)
 CORS(app)
 
-
 @app.route('/api', methods=['POST', 'GET'])
 def api():
+	global success
 	# grab json from react
 	data = request.get_json()
 	resp = 'Nobody'
@@ -124,9 +125,24 @@ def api():
 	
 	if error:
 		print("here1", file=sys.stderr)
-		return send_file("./images/image.jpg", mimetype="image/jpg")
+		#return send_file("./images/image.jpg", mimetype="image/jpg")
+		success = False
+		return 'false'
 	else:
 		print("here2", file=sys.stderr)
+		#return send_file("./images/mask_image.png", mimetype="image/png")
+		success = True
+		return 'true'
+
+
+@app.route('/get', methods=['GET'])
+def get():
+	global success
+	if not success:
+		print("here3", file=sys.stderr)
+		return send_file("./images/image.jpg", mimetype="image/jpg")
+	else:
+		print("here4", file=sys.stderr)
 		return send_file("./images/mask_image.png", mimetype="image/png")
 	
 
