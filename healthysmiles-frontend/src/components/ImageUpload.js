@@ -74,7 +74,7 @@ class ImageUpload extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <input type="file" onChange={this.fileSelectedHandler}/>
         <button onClick={this.fileUploadHandler}>Upload</button>
         {this.state.img &&
