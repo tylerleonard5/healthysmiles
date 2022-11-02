@@ -7,10 +7,20 @@ class ImageUpload extends Component {
     file: null,
     base64URL: "",
     ImgReturned:false,
-    img: ""
+    img: "",
+    oldImage: null
   }
 
   fileSelectedHandler = (event) => {
+
+    var img = document.createElement("img");
+    img.src = URL.createObjectURL(event.target.files[0]);
+    img.onload = () => {
+      this.setState({oldImage: URL.createObjectURL(event.target.files[0])});
+    }
+
+
+
     let { file } = this.state
 
     file = event.target.files[0]
@@ -76,6 +86,7 @@ class ImageUpload extends Component {
     return (
       <div>
         <input type="file" onChange={this.fileSelectedHandler}/>
+        {this.state.oldImage && <img src = {this.state.oldImage} style = {{height: "500px", width: "500px", objectFit: "contain"}}/>}
         <button onClick={this.fileUploadHandler}>Upload</button>
         {this.state.img &&
         <img src= {this.state.img} alt="mask_image"/>}

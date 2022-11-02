@@ -76,6 +76,7 @@ def api():
 	# grab json from react
 	data = request.get_json()
 	resp = 'Nobody'
+	error = False
 
 	# check if data exists
 	if data:
@@ -91,18 +92,21 @@ def api():
 			predictor = dlib.shape_predictor("./predictor/shape_predictor_68_face_landmarks.dat")
 
 			image_manip = cv2.imread("./images/image.jpg")
-			image_manip = imutils.resize(image_manip, width=250, height=250)
+			image_manip = imutils.resize(image_manip, width=500, height=500)
 
 			rows, cols, ch = image_manip.shape
+
 
 			gray = cv2.cvtColor(image_manip, cv2.COLOR_BGR2GRAY)
 			rect = detector(gray, 1)
 
-			img2 = cv2.imread("./images/teeth2.jpg")
+
+			img2 = cv2.imread("./images/smiles/teeth2.jpg")
 			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 			rect2 = detector(gray2, 1)
-			
+
 			shape = predictor(gray, rect[0])
+
 			shape = face_utils.shape_to_np(shape)
 
 			shape2 = predictor(gray2, rect2[0])
@@ -115,8 +119,15 @@ def api():
 
 
 		except:
-			pass
-	return send_file("./images/mask_image.png", mimetype="image/png")
+			print("here", file=sys.stderr)
+			error = True
+	
+	if error:
+		print("here1", file=sys.stderr)
+		return send_file("./images/image.jpg", mimetype="image/jpg")
+	else:
+		print("here2", file=sys.stderr)
+		return send_file("./images/mask_image.png", mimetype="image/png")
 	
 
 
