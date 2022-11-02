@@ -91,14 +91,14 @@ def api():
 			predictor = dlib.shape_predictor("./predictor/shape_predictor_68_face_landmarks.dat")
 
 			image_manip = cv2.imread("./images/image.jpg")
-			image_manip = imutils.resize(image_manip, width=250, height=250)
+			image_manip = imutils.resize(image_manip, width=500, height=500)
 
 			rows, cols, ch = image_manip.shape
 
 			gray = cv2.cvtColor(image_manip, cv2.COLOR_BGR2GRAY)
 			rect = detector(gray, 1)
 
-			img2 = cv2.imread("./images/teeth2.jpg")
+			img2 = cv2.imread("./images/smiles/teeth2.jpg")
 			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 			rect2 = detector(gray2, 1)
 			
