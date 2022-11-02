@@ -57,17 +57,19 @@ class ImageUpload extends Component {
 
   fileUploadHandler = () => {
     this.setState({
-      img:null
+      img:null,
+      ImgReturned:false
     })
     console.log(this.state.file)
     axios.post('http://127.0.0.1:5000/api', {data: this.state.file})
       .then(res => {
-        console.log(`response = ${typeof res.data}`)
-        const name = (res.data.name)
+        console.log(`response = ${res.data}`)
+        //const name = (res.data.data.name)
         this.setState({
           ImgReturned:true,
-          img:"http://127.0.0.1:5000/api"
+          img:'http://127.0.0.1:5000/get'
         })
+        console.log('after set state')
       })
       .catch(error => {
         console.log(`error = ${error}`)
