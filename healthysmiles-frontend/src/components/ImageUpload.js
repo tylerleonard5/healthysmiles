@@ -84,7 +84,7 @@ class ImageUpload extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <input type="file" onChange={this.fileSelectedHandler}/>
         {this.state.oldImage && <img src = {this.state.oldImage} style = {{height: "500px", width: "500px", objectFit: "contain"}}/>}
         <button onClick={this.fileUploadHandler}>Upload</button>

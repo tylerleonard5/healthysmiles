@@ -1,38 +1,98 @@
 .App {
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  align-items: center;
+  background: linear-gradient(270deg, #caecd7 0%, #e2bbd4 100%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.AppMain {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  width: 100vw;
+}
+
+.headerSection {
+  margin-top: 2vh;
+}
+
+.headerText {
+  font-size: 2vw;
+}
+
+.Banner {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-top: 17.5vh;
+  width: 85vw;
+}
+
+.bannerImage {
+  width: 25vw;
+  height: 25vw;
+  object-fit: cover;
+  border-radius: 5%;
+}
+
+.downButtonSection {
+  margin-top: 10%;
+}
+
+.ui.button.downButton {
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: rgba(255,255,255,0);
 }
 
-.App-link {
-  color: #61dafb;
+.ui.button.downButton:hover {
+  background-color: rgba(255,255,255,0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ui.button.downButton:focus {
+  background-color: rgba(255,255,255,0);
+}
+
+.uploadSection {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.uploadContainer {
+  padding: 1%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: white;
+}
+
+.uploadContent {
+  height: 37.5vmin;
+  width: 97.5vmin;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  border: 0.275vmin dotted #848484;
+  padding: 1vmin;
+}
+
+.imageUploadedContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uploadedImage {
+  max-width: 40vw;
+  max-height: 40vw;
+  object-fit: contain;
 }
