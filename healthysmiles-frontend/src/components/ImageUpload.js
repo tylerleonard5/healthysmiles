@@ -89,7 +89,7 @@ class ImageUpload extends Component {
         {this.state.oldImage && <img src = {this.state.oldImage} style = {{height: "500px", width: "500px", objectFit: "contain"}}/>}
         <button onClick={this.fileUploadHandler}>Upload</button>
         {this.state.img &&
-        <img src= {this.state.img} alt="mask_image"/>}
+        <img src= {this.state.img} alt="mask_image" style = {{height: "500px", width: "500px", objectFit: "contain"}}/>}
         <button onClick={this.newImage}>Clear Image</button>
 
       </div>
