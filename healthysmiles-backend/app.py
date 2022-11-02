@@ -35,22 +35,14 @@ def visualize_mouth_landmarks(image, img2, shape, shape2, rows, cols, ch, color=
 
 	dst = cv2.warpAffine(img2, H[0], (cols, rows))
 
-	print("HERE8", file=sys.stderr)
-
 
 	mask = np.zeros(dst.shape, np.uint8)
-
-	print("HERE9", file=sys.stderr)
 
 	pts3 = shape[j:k]
 
 	hull = cv2.convexHull(pts3)
 
-	print("HERE10", file=sys.stderr)
-
 	cv2.drawContours(mask, [hull], -1, (255,255,255), -1)
-
-	print("HERE11", file=sys.stderr)
 
 
 	result3 = cv2.fillPoly(image, pts = [hull], color = (0,0,0))
@@ -95,42 +87,26 @@ def api():
 			im = im.convert("RGB")
 			im.save('./images/image.jpg')
 
-			print("HERE1", file=sys.stderr)
-
 			detector = dlib.get_frontal_face_detector()
 			predictor = dlib.shape_predictor("./predictor/shape_predictor_68_face_landmarks.dat")
 
-			print("HERE2", file=sys.stderr)
-
 			image_manip = cv2.imread("./images/image.jpg")
 			image_manip = imutils.resize(image_manip, width=250, height=250)
-
-			print("HERE3", file=sys.stderr)
 
 			rows, cols, ch = image_manip.shape
 
 			gray = cv2.cvtColor(image_manip, cv2.COLOR_BGR2GRAY)
 			rect = detector(gray, 1)
 
-			print("HERE4", file=sys.stderr)
-
-			img2 = cv2.imread("./images/teeth.jpg")
+			img2 = cv2.imread("./images/teeth2.jpg")
 			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 			rect2 = detector(gray2, 1)
-
-			print("HERE5", file=sys.stderr)
-
-			print("HERE69", file=sys.stderr)
 			
 			shape = predictor(gray, rect[0])
 			shape = face_utils.shape_to_np(shape)
 
-			print("HERE6", file=sys.stderr)
-
 			shape2 = predictor(gray2, rect2[0])
 			shape2 = face_utils.shape_to_np(shape2)
-
-			print("HERE7", file=sys.stderr)
 
 			# visualize all facial landmarks with a transparent overlay
 			output = visualize_mouth_landmarks(image_manip, img2, shape, shape2, rows, cols, ch)
