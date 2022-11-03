@@ -3,6 +3,7 @@ import './App.css';
 import ImageUpload from './components/ImageUpload.js';
 import { Button, Icon } from 'semantic-ui-react';
 import { FileUploader } from "react-drag-drop-files";
+import axios from 'axios';
 
 import womanClose from './assets/womanCloseup.jpg';
 import manTeeth from './assets/manTeeth.jpg';
@@ -15,6 +16,8 @@ class App extends React.Component {
     this.state = {
       imageFile: null,
       imageToDisplay: null,
+      error: false,
+      base64URL: "",
     }
   }
 
@@ -22,19 +25,83 @@ class App extends React.Component {
     this.uploadRef.current.scrollIntoView({behavior: 'smooth'});
   }
 
-  imageFileUpload = (file: any) => {
+  imageFileUpload = (file) => {
     console.log(file);
     this.setState({imageFile: file});
     var img = document.createElement("img");
     img.src = URL.createObjectURL(file);
     img.onload = () => {
       this.setState({imageToDisplay: URL.createObjectURL(file)});
-    }
+    };
+
+    let { imageFile } = this.state
+
+    imageFile = file;
+
+    this.getbase64(file)
+      .then(result => {
+        imageFile["base64"] = result
+        this.setState({
+          base64URL: result,
+          imageFile
+        })
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    this.setState({
+      imageFile: file,
+    });
   };
 
+  getbase64 = (file) => {
+    return new Promise(resolve => {
+      let baseURL = ""
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        baseURL = reader.result
+        resolve(baseURL)
+      }
+    });
+  }
+
+  processImage = () => {
+    axios.post('http://127.0.0.1:5000/api', {data: this.state.imageFile})
+    .then(res => {
+      console.log(`response = ${res.data}`);
+
+      if (res.data === "false") {
+        this.setState({
+          error: true,
+        });
+        return;
+      }
+
+      axios.get('http://127.0.0.1:5000/get')
+      .then(res => {
+
+        if (res.data === "error") {
+          console.log("ERROR");
+        }
+
+        this.setState({
+          imageToDisplay: 'http://127.0.0.1:5000/get',
+        }, () => console.log("ran"));
+      });
+    })
+    .catch(error => {
+      console.log(`error = ${error}`);
+      this.setState({
+        error: true,
+      });
+    });
+  }
+
   resetPhoto = () => {
-    this.setState({imageToDisplay: null});
-    this.setState({imageFile: null});
+    this.setState({imageToDisplay: null, imageFile: null, error: false});
   }
 
   render() {
@@ -84,7 +151,7 @@ class App extends React.Component {
             :
             <div className="imageUploadedContainer">
               <img src={this.state.imageToDisplay} className="uploadedImage"/>
-              <Button animated color="pink" size="massive" style={{marginTop: "5%"}}>
+              <Button animated color="pink" size="massive" style={{marginTop: "5%"}} onClick={(e) => this.processImage()}>
                 <Button.Content visible>Perfect my Smile!</Button.Content>
                 <Button.Content hidden>Go</Button.Content>
               </Button>
@@ -96,9 +163,7 @@ class App extends React.Component {
               </Button>
             </div>
           }
-          <ImageUpload />
         </div>
-        
       </div>
     );
   }

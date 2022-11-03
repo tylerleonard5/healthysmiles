@@ -8,7 +8,8 @@ class ImageUpload extends Component {
     base64URL: "",
     ImgReturned:false,
     img: "",
-    oldImage: null
+    oldImage: null,
+    error: false,
   }
 
   fileSelectedHandler = (event) => {
@@ -40,7 +41,8 @@ class ImageUpload extends Component {
 
     this.setState({
       file: event.target.files[0]
-    })
+    });
+    console.log(event.target.files[0]);
   }
 
   getbase64 = (file) => {
@@ -57,30 +59,50 @@ class ImageUpload extends Component {
 
   fileUploadHandler = () => {
     this.setState({
-      img:null,
-      ImgReturned:false
+      img: null,
+      ImgReturned: false,
     })
     console.log(this.state.file)
     axios.post('http://127.0.0.1:5000/api', {data: this.state.file})
       .then(res => {
-        console.log(`response = ${res.data}`)
-        //const name = (res.data.data.name)
-        this.setState({
-          ImgReturned:true,
-          img:'http://127.0.0.1:5000/get'
-        })
-        console.log('after set state')
+        console.log(`response = ${res.data}`);
+
+        if (res.data === "false") {
+          this.setState({
+            error: true,
+          });
+          console.log("ERROR");
+          return;
+        }
+
+        axios.get('http://127.0.0.1:5000/get')
+        .then(res => {
+          if (res.data === "error") {
+            console.log("ERROR");
+          }
+          this.setState({
+            ImgReturned: true,
+            img: 'http://127.0.0.1:5000/get',
+            error: false,
+          });
+        });
       })
       .catch(error => {
-        console.log(`error = ${error}`)
-      })
+        console.log(`error = ${error}`);
+        this.setState({
+          img: null,
+          ImgReturned: false,
+          error: false,
+        });
+      });
   }
+
   newImage = () => {
     this.setState({
-      ImgReturned:false,
+      ImgReturned: false,
       file: null,
       base64URL: "",
-      img:null
+      img: null
     })
   }
 
@@ -93,7 +115,6 @@ class ImageUpload extends Component {
         {this.state.img &&
         <img src= {this.state.img} alt="mask_image" style = {{height: "500px", width: "500px", objectFit: "contain"}}/>}
         <button onClick={this.newImage}>Clear Image</button>
-
       </div>
     );
   }
