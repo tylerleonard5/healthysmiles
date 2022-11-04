@@ -158,7 +158,7 @@ class App extends React.Component {
               <img src={this.state.imageToDisplay} className="uploadedImage"/>
               { this.state.error &&
                 <h2 style={{color: "black", width: "40vw", fontStyle: "italic"}}>
-                  Make sure you are the only one in the picture and your smile is clear and visible!
+                  Make sure you are the only one in the picture and your face and smile is clear and visible!
                 </h2>
               }
               <Button animated color="pink" size="massive" style={{marginTop: "5%"}} onClick={(e) => this.processImage()}>

@@ -65,7 +65,7 @@ const ViewImage = ({props}) => {
                 </div>
               </div>
 
-              <Button animated color="green" size="massive" style={{marginTop: "5%"}} onClick={(e) => navigate("/")}>
+              <Button animated color="green" size="massive" style={{marginTop: "1vh"}} onClick={(e) => navigate("/")}>
                 <Button.Content visible>Again!</Button.Content>
                 <Button.Content hidden>
                   <Icon name="redo" />
