@@ -3,6 +3,7 @@ import './App.css';
 import ImageUpload from './components/ImageUpload.js';
 import { Button, Icon } from 'semantic-ui-react';
 import { FileUploader } from "react-drag-drop-files";
+import { Navigate } from "react-router-dom";
 import axios from 'axios';
 
 import womanClose from './assets/womanCloseup.jpg';
@@ -18,7 +19,12 @@ class App extends React.Component {
       imageToDisplay: null,
       error: false,
       base64URL: "",
+      redirect: false,
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({redirect: false});
   }
 
   scrollToUpload = () => {
@@ -73,24 +79,17 @@ class App extends React.Component {
     .then(res => {
       console.log(`response = ${res.data}`);
 
-      if (res.data === "false") {
+      if (res.data === "error") {
         this.setState({
           error: true,
         });
         return;
-      }
-
-      axios.get('http://127.0.0.1:5000/get')
-      .then(res => {
-
-        if (res.data === "error") {
-          console.log("ERROR");
-        }
-
+      } else {
         this.setState({
-          imageToDisplay: 'http://127.0.0.1:5000/get',
-        }, () => console.log("ran"));
-      });
+          error: false,
+        });
+        //Go to the next page
+      }
     })
     .catch(error => {
       console.log(`error = ${error}`);
@@ -150,7 +149,13 @@ class App extends React.Component {
             </div>
             :
             <div className="imageUploadedContainer">
+              
               <img src={this.state.imageToDisplay} className="uploadedImage"/>
+              { this.state.error &&
+                <h1 style={{color: "red"}}>
+                  Cannot process photo. Make sure your smile is clear and visible!
+                </h1>
+              }
               <Button animated color="pink" size="massive" style={{marginTop: "5%"}} onClick={(e) => this.processImage()}>
                 <Button.Content visible>Perfect my Smile!</Button.Content>
                 <Button.Content hidden>Go</Button.Content>
@@ -164,6 +169,8 @@ class App extends React.Component {
             </div>
           }
         </div>
+
+        {this.state.redirect && <Navigate to="/newteeth" replace={true} state={{imageProcessed: true}}/>}
       </div>
     );
   }
