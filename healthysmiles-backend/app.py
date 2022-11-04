@@ -106,7 +106,7 @@ def api():
 			rect = detector(gray, 1)
 
 			# Get rect2 with detector as well
-			img2 = cv2.imread("./images/smiles/teeth2.jpg")
+			img2 = cv2.imread("./images/smiles/braces.jpg")
 			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 			rect2 = detector(gray2, 1)
 
@@ -137,7 +137,7 @@ def api():
 		print("here1", file=sys.stderr)
 		#return send_file("./images/image.jpg", mimetype="image/jpg")
 		success = False
-		return 'false'
+		return 'error'
 	else:
 		print("here2", file=sys.stderr)
 		#return send_file("./images/mask_image.png", mimetype="image/png")

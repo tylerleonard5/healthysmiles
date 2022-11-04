@@ -87,8 +87,9 @@ class App extends React.Component {
       } else {
         this.setState({
           error: false,
+          redirect: true,
         });
-        //Go to the next page
+        
       }
     })
     .catch(error => {
@@ -149,12 +150,16 @@ class App extends React.Component {
             </div>
             :
             <div className="imageUploadedContainer">
-              
-              <img src={this.state.imageToDisplay} className="uploadedImage"/>
               { this.state.error &&
                 <h1 style={{color: "red"}}>
-                  Cannot process photo. Make sure your smile is clear and visible!
+                  Cannot process photo!
                 </h1>
+              }
+              <img src={this.state.imageToDisplay} className="uploadedImage"/>
+              { this.state.error &&
+                <h2 style={{color: "black", width: "40vw", fontStyle: "italic"}}>
+                  Make sure you are the only one in the picture and your smile is clear and visible!
+                </h2>
               }
               <Button animated color="pink" size="massive" style={{marginTop: "5%"}} onClick={(e) => this.processImage()}>
                 <Button.Content visible>Perfect my Smile!</Button.Content>
@@ -170,7 +175,18 @@ class App extends React.Component {
           }
         </div>
 
-        {this.state.redirect && <Navigate to="/newteeth" replace={true} state={{imageProcessed: true}}/>}
+        { this.state.redirect &&
+          <Navigate
+            to={{
+              pathname: "/newteeth",
+            }}
+            replace={true}
+            state={{
+              imageProcessed: true,
+              oldImage: this.state.imageToDisplay,
+            }}
+          />
+        }
       </div>
     );
   }
