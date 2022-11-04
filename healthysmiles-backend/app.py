@@ -110,6 +110,11 @@ def api():
 			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 			rect2 = detector(gray2, 1)
 
+			print(len(rect), file=	sys.stderr)
+			if len(rect) != 1:
+				raise Exception("error")
+
+
 			# Grab numpy arrays for the points of the landmarks
 			shape = predictor(gray, rect[0])
 			shape = face_utils.shape_to_np(shape)
