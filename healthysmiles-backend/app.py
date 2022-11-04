@@ -106,7 +106,7 @@ def api():
 			rect = detector(gray, 1)
 
 			# Get rect2 with detector as well
-			img2 = cv2.imread("./images/smiles/braces.jpg")
+			img2 = cv2.imread("./images/smiles/teeth3.jpg")
 			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 			rect2 = detector(gray2, 1)
 
