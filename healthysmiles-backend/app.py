@@ -105,28 +105,32 @@ def api():
 			gray = cv2.cvtColor(image_manip, cv2.COLOR_BGR2GRAY)
 			rect = detector(gray, 1)
 
-			# Get rect2 with detector as well
-			img2 = cv2.imread("./images/smiles/teeth3.jpg")
-			gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-			rect2 = detector(gray2, 1)
+			# iterate and manipulate image for 5 different sample teeth
+			for i in range(5):
+				# Get rect2 with detector as well
+				fileInputName = "./images/smiles/teeth" + str(i + 1) + ".jpg"
+				img2 = cv2.imread(fileInputName)
+				gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+				rect2 = detector(gray2, 1)
 
-			print(len(rect), file=	sys.stderr)
-			if len(rect) != 1:
-				raise Exception("error")
+				print(len(rect), file=	sys.stderr)
+				if len(rect) != 1:
+					raise Exception("error")
 
 
-			# Grab numpy arrays for the points of the landmarks
-			shape = predictor(gray, rect[0])
-			shape = face_utils.shape_to_np(shape)
+				# Grab numpy arrays for the points of the landmarks
+				shape = predictor(gray, rect[0])
+				shape = face_utils.shape_to_np(shape)
 
-			# Second numpy array
-			shape2 = predictor(gray2, rect2[0])
-			shape2 = face_utils.shape_to_np(shape2)
+				# Second numpy array
+				shape2 = predictor(gray2, rect2[0])
+				shape2 = face_utils.shape_to_np(shape2)
 
-			# run code to get replacement image
-			output = visualize_mouth_landmarks(image_manip, img2, shape, shape2, rows, cols, ch)
-			cv2.imwrite("./images/mask_image.png", output)
-			cv2.waitKey(0)
+				# run code to get replacement image
+				output = visualize_mouth_landmarks(image_manip, img2, shape, shape2, rows, cols, ch)
+				fileOutputName = "./images/mask_image" + str(i + 1) + ".png"
+				cv2.imwrite(fileOutputName, output)
+				cv2.waitKey(0)
 
 		# Error handling
 		except:
@@ -151,12 +155,60 @@ def api():
 def get():
 	global success
 	if not success:
-		print("here3", file=sys.stderr)
 		# return send_file("./images/image.jpg", mimetype="image/jpg")
 		return 'error'
 	else:
-		print("here4", file=sys.stderr)
 		return send_file("./images/mask_image.png", mimetype="image/png")
+
+# Second endpt for getting the image1
+@app.route('/get1', methods=['GET'])
+def get():
+	global success
+	if not success:
+		# return send_file("./images/image.jpg", mimetype="image/jpg")
+		return 'error'
+	else:
+		return send_file("./images/mask_image1.png", mimetype="image/png")
+
+# Second endpt for getting the image2
+@app.route('/get2', methods=['GET'])
+def get():
+	global success
+	if not success:
+		# return send_file("./images/image.jpg", mimetype="image/jpg")
+		return 'error'
+	else:
+		return send_file("./images/mask_image2.png", mimetype="image/png")
+
+# Second endpt for getting the image3
+@app.route('/get3', methods=['GET'])
+def get():
+	global success
+	if not success:
+		# return send_file("./images/image.jpg", mimetype="image/jpg")
+		return 'error'
+	else:
+		return send_file("./images/mask_image3.png", mimetype="image/png")
+
+# Second endpt for getting the image4
+@app.route('/get4', methods=['GET'])
+def get():
+	global success
+	if not success:
+		# return send_file("./images/image.jpg", mimetype="image/jpg")
+		return 'error'
+	else:
+		return send_file("./images/mask_image4.png", mimetype="image/png")
+
+# Second endpt for getting the image5
+@app.route('/get5', methods=['GET'])
+def get():
+	global success
+	if not success:
+		# return send_file("./images/image.jpg", mimetype="image/jpg")
+		return 'error'
+	else:
+		return send_file("./images/mask_image5.png", mimetype="image/png")
 	
 
 
