@@ -92,9 +92,12 @@
 }
 
 .uploadedImage {
+  width: auto;
+  height: auto;
   max-width: 40vw;
   max-height: 40vw;
   object-fit: contain;
+  border-radius: 10%;
 }
 
 .imageDisplayContainer {
@@ -102,18 +105,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
+=======
+  margin-top: 15vh;
+>>>>>>> main
 }
 
 .imageDisplay {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  width: 80vw;
+  align-items: flex-start;
+  width: 70vw;
 }
 
 .viewNewImage {
-  max-width: 40vw;
-  max-height: 40vw;
+  display: block;
+  width: 32.5vw;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
+  border-radius: 10%;
 }

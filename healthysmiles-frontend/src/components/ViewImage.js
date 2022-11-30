@@ -6,7 +6,7 @@ import { Dna } from  'react-loader-spinner';
 import { Button, Icon } from 'semantic-ui-react';
 
 
-const ViewImage = ({}) => {
+const ViewImage = ({props}) => {
 
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -24,14 +24,9 @@ const ViewImage = ({}) => {
     
       //Get Image from server
       const { oldImage } = state;
+      console.log(oldImage);
       setOldImage(oldImage);
       setNewImage("http://127.0.0.1:5000/get");
-      // axios.get("http://127.0.0.1:5000/get").then(res => {
-      //   if (res.data === "error")
-      //     navigate("/");
-
-      //   setNewImage("http://127.0.0.1:5000/get");
-      // })
       setTimeout(() => {
         setLoading(false);
       }, 3000);
@@ -45,9 +40,9 @@ const ViewImage = ({}) => {
           <h1 className="headerText">Healthy Smiles</h1>
         </div>
 
-        <div style={{marginTop: "30vh"}}>
+        <div>
           { loading ?
-            <div>
+            <div style={{marginTop: "30vh"}}>
               <h1>Making your smile :)</h1>
               <Dna
                 visible={true}
@@ -66,10 +61,11 @@ const ViewImage = ({}) => {
                 </div>
                 <div>
                   <img src={newImage} className="viewNewImage"/>
+                  <h2>Check out your new photo!</h2>
                 </div>
               </div>
 
-              <Button animated color="green" size="massive" style={{marginTop: "5%"}} onClick={(e) => navigate("/")}>
+              <Button animated color="green" size="massive" style={{marginTop: "1vh"}} onClick={(e) => navigate("/")}>
                 <Button.Content visible>Again!</Button.Content>
                 <Button.Content hidden>
                   <Icon name="redo" />
