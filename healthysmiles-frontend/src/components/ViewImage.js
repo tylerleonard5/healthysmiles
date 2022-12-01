@@ -13,7 +13,7 @@ const ViewImage = ({props}) => {
   const [loading, setLoading] = useState(true);
   const [oldImage, setOldImage] = useState();
   const [newImage, setNewImage] = useState();
-  const [images, setImages] = useState();
+  const [images, setImages] = useState(null);
   const index = useRef(0);
 
   useEffect(() => {
@@ -35,18 +35,22 @@ const ViewImage = ({props}) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (images !== null && images.length > 0)
+      setNewImage(images[0]);
+  }, [images])
+
   const pullImages = () => {
     let images = [];
-    for (let i = 0; i < 5; i++) {
-      images.push(`http://127.0.0.1:500/get${i}`);
-    }
+    for (let i = 1; i < 6; i++) {
+      images.push(`http://127.0.0.1:5000/get${i}`);
+    }   
 
-    setImages(images);
-    setNewImage(images[0]);
+    setImages(images)
   }
 
   const nextImage = () => {
-    if (index.current === images.length ) {
+    if (index.current == images.length - 1) {
       setNewImage(images[0]);
       index.current = 0;
     } else {
@@ -83,7 +87,10 @@ const ViewImage = ({props}) => {
                 </div>
                 <div>
                   <img src={newImage} className="viewNewImage"/>
-                  <h2>Check out your new photo!</h2>
+                  <div style={{marginTop: "7%"}}>
+                    <h2>Choose a different Smile!</h2>
+                    <Button color="pink" size="huge" className="nextButton" onClick={(e) => nextImage()}>Next Smile</Button>
+                  </div>
                 </div>
               </div>
 
