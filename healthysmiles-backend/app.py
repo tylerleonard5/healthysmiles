@@ -162,7 +162,7 @@ def get():
 
 # Second endpt for getting the image1
 @app.route('/get1', methods=['GET'])
-def get():
+def get1():
 	global success
 	if not success:
 		# return send_file("./images/image.jpg", mimetype="image/jpg")
@@ -170,9 +170,9 @@ def get():
 	else:
 		return send_file("./images/mask_image1.png", mimetype="image/png")
 
-# Second endpt for getting the image2
+# Second endpt for getting the image2.
 @app.route('/get2', methods=['GET'])
-def get():
+def get2():
 	global success
 	if not success:
 		# return send_file("./images/image.jpg", mimetype="image/jpg")
@@ -182,7 +182,7 @@ def get():
 
 # Second endpt for getting the image3
 @app.route('/get3', methods=['GET'])
-def get():
+def get3():
 	global success
 	if not success:
 		# return send_file("./images/image.jpg", mimetype="image/jpg")
@@ -192,7 +192,7 @@ def get():
 
 # Second endpt for getting the image4
 @app.route('/get4', methods=['GET'])
-def get():
+def get4():
 	global success
 	if not success:
 		# return send_file("./images/image.jpg", mimetype="image/jpg")
@@ -202,7 +202,7 @@ def get():
 
 # Second endpt for getting the image5
 @app.route('/get5', methods=['GET'])
-def get():
+def get5():
 	global success
 	if not success:
 		# return send_file("./images/image.jpg", mimetype="image/jpg")

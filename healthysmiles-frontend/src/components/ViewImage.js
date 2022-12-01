@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../App.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ const ViewImage = ({props}) => {
   const [loading, setLoading] = useState(true);
   const [oldImage, setOldImage] = useState();
   const [newImage, setNewImage] = useState();
+  const [images, setImages] = useState(null);
+  const index = useRef(0);
 
   useEffect(() => {
     if (state === null) {
@@ -26,15 +28,39 @@ const ViewImage = ({props}) => {
       const { oldImage } = state;
       console.log(oldImage);
       setOldImage(oldImage);
-      setNewImage("http://127.0.0.1:5000/get");
+      pullImages();
       setTimeout(() => {
         setLoading(false);
       }, 3000);
     }
   }, []);
 
+  useEffect(() => {
+    if (images !== null && images.length > 0)
+      setNewImage(images[0]);
+  }, [images])
+
+  const pullImages = () => {
+    let images = [];
+    for (let i = 1; i < 6; i++) {
+      images.push(`http://127.0.0.1:5000/get${i}`);
+    }   
+
+    setImages(images)
+  }
+
+  const nextImage = () => {
+    if (index.current == images.length - 1) {
+      setNewImage(images[0]);
+      index.current = 0;
+    } else {
+      setNewImage(images[index.current + 1]);
+      index.current++;
+    }
+  }
+
   return (
-    <div className="App" style={{height: "100vh"}}>
+    <div className="App" style={{minHeight: "100vh"}}>
       <header className="App-header">
         <div className="headerSection">
           <h1 className="headerText">Healthy Smiles</h1>
@@ -61,7 +87,10 @@ const ViewImage = ({props}) => {
                 </div>
                 <div>
                   <img src={newImage} className="viewNewImage"/>
-                  <h2>Check out your new photo!</h2>
+                  <div style={{marginTop: "7%"}}>
+                    <h2>Choose a different Smile!</h2>
+                    <Button color="pink" size="huge" className="nextButton" onClick={(e) => nextImage()}>Next Smile</Button>
+                  </div>
                 </div>
               </div>
 
