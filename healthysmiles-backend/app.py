@@ -13,7 +13,7 @@ import cv2
 
 success = False
 
-def visualize_mouth_landmarks(image, img2, shape, shape2, rows, cols, ch, color=(0,0,0), alpha=0.5):
+def visualize_mouth_landmarks(image, img2, shape, shape2, rows, cols):
 	
 	# Only need the inner mouth indeces.  This gets the indeces of the intermouth in the shape np array
 	(j, k) = face_utils.FACIAL_LANDMARKS_IDXS["inner_mouth"]
@@ -75,7 +75,6 @@ def api():
 	global success
 	# grab json from react
 	data = request.get_json()
-	resp = 'Nobody'
 	error = False
 
 	# check if data exists
@@ -108,8 +107,8 @@ def api():
 			# iterate and manipulate image for 5 different sample teeth
 			for i in range(5):
 				# Get rect2 with detector as well
-				fileInputName = "./images/smiles/teeth" + str(i + 1) + ".jpg"
-				img2 = cv2.imread(fileInputName)
+				file_input_name = "./images/smiles/teeth" + str(i + 1) + ".jpg"
+				img2 = cv2.imread(file_input_name)
 				gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 				rect2 = detector(gray2, 1)
 
@@ -128,8 +127,8 @@ def api():
 
 				# run code to get replacement image
 				output = visualize_mouth_landmarks(image_manip, img2, shape, shape2, rows, cols, ch)
-				fileOutputName = "./images/mask_image" + str(i + 1) + ".png"
-				cv2.imwrite(fileOutputName, output)
+				file_output_name = "./images/mask_image" + str(i + 1) + ".png"
+				cv2.imwrite(file_output_name, output)
 				cv2.waitKey(0)
 
 		# Error handling
@@ -139,12 +138,12 @@ def api():
 	
 	if error:
 		print("here1", file=sys.stderr)
-		#return send_file("./images/image.jpg", mimetype="image/jpg")
+		
 		success = False
 		return 'error'
 	else:
 		print("here2", file=sys.stderr)
-		#return send_file("./images/mask_image.png", mimetype="image/png")
+		
 		success = True
 		return 'true'
 
@@ -155,7 +154,7 @@ def api():
 def get():
 	global success
 	if not success:
-		# return send_file("./images/image.jpg", mimetype="image/jpg")
+
 		return 'error'
 	else:
 		return send_file("./images/mask_image.png", mimetype="image/png")
@@ -165,7 +164,7 @@ def get():
 def get1():
 	global success
 	if not success:
-		# return send_file("./images/image.jpg", mimetype="image/jpg")
+
 		return 'error'
 	else:
 		return send_file("./images/mask_image1.png", mimetype="image/png")
@@ -175,7 +174,7 @@ def get1():
 def get2():
 	global success
 	if not success:
-		# return send_file("./images/image.jpg", mimetype="image/jpg")
+
 		return 'error'
 	else:
 		return send_file("./images/mask_image2.png", mimetype="image/png")
@@ -185,7 +184,7 @@ def get2():
 def get3():
 	global success
 	if not success:
-		# return send_file("./images/image.jpg", mimetype="image/jpg")
+
 		return 'error'
 	else:
 		return send_file("./images/mask_image3.png", mimetype="image/png")
@@ -195,7 +194,7 @@ def get3():
 def get4():
 	global success
 	if not success:
-		# return send_file("./images/image.jpg", mimetype="image/jpg")
+
 		return 'error'
 	else:
 		return send_file("./images/mask_image4.png", mimetype="image/png")
@@ -205,7 +204,7 @@ def get4():
 def get5():
 	global success
 	if not success:
-		# return send_file("./images/image.jpg", mimetype="image/jpg")
+
 		return 'error'
 	else:
 		return send_file("./images/mask_image5.png", mimetype="image/png")
