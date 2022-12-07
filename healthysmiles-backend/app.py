@@ -126,7 +126,7 @@ def api():
 				shape2 = face_utils.shape_to_np(shape2)
 
 				# run code to get replacement image
-				output = visualize_mouth_landmarks(image_manip, img2, shape, shape2, rows, cols, ch)
+				output = visualize_mouth_landmarks(image_manip, img2, shape, shape2, rows, cols)
 				file_output_name = "./images/mask_image" + str(i + 1) + ".png"
 				cv2.imwrite(file_output_name, output)
 				cv2.waitKey(0)

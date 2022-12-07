@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
 import './App.css';
-import ImageUpload from './components/ImageUpload.js';
 import { Button, Icon } from 'semantic-ui-react';
 import { FileUploader } from "react-drag-drop-files";
 import { Navigate } from "react-router-dom";

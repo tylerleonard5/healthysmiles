@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../App.css';
-import axios from 'axios';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dna } from  'react-loader-spinner';
 import { Button, Icon } from 'semantic-ui-react';
