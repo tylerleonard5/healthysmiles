@@ -136,7 +136,7 @@ class App extends React.Component {
                     <p style={{color: "black", fontSize: "1.8vw", fontWeight: "700"}}>
                       Click or Drag a Photo of you smiling
                     </p>
-                    <p style={{color: "black", fontSize: "1.1vw", fontStyle: "italic", fontWeight: "600", color: 'gray'}}>
+                    <p style={{fontSize: "1.1vw", fontStyle: "italic", fontWeight: "600", color: 'gray'}}>
                       **For best results use a clear photo showing your smile**
                     </p>
                     <Button inverted color="violet" size="huge">
